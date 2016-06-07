@@ -1,0 +1,1 @@
+﻿docker build --label=nicholasdille/chocolatey -t chocolatey .\chocolatey
