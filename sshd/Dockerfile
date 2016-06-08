@@ -1,0 +1,30 @@
+﻿FROM windowsservercore
+MAINTAINER nicholas.dille@haufe-lexware.com
+
+# Download materials for Win-OpenSSH
+RUN powershell -Command Invoke-WebRequest -Uri 'https://live.sysinternals.com/psexec.exe' -OutFile 'c:\Windows\Temp\psexec.exe'
+RUN powershell -Command Invoke-WebRequest -Uri 'https://github.com/PowerShell/Win32-OpenSSH/releases/download/5_30_2016/OpenSSH-Win64.zip' -OutFile 'c:\Windows\Temp\OpenSSH-Win64.zip'
+RUN powershell -Command Expand-Archive -Path 'c:\Windows\Temp\OpenSSH-Win64.zip' -DestinationPath "$Env:ProgramFiles"
+
+# Create service ssh-agent
+RUN [ "powershell", "-Command", "New-Service -Name ssh-agent -BinaryPathName 'c:\\Program Files\\OpenSSH-Win64\\ssh-agent.exe' -Description 'SSH Agent' -StartupType Manual" ]
+RUN sc.exe sdset ssh-agent D:(A;;CCLCSWRPWPDTLOCRRC;;;SY)(A;;CCDCLCSWRPWPDTLOCRSDRCWDWO;;;BA)(A;;CCLCSWLOCRRC;;;IU)(A;;CCLCSWLOCRRC;;;SU)(A;;RP;;;AU)
+
+# Create service sshd
+RUN [ "powershell", "-Command", "New-Service -Name sshd -BinaryPathName 'c:\\Program Files\\OpenSSH-Win64\\sshd.exe' -Description 'SSH Deamon' -StartupType Manual -DependsOn ssh-agent" ]
+RUN sc.exe config sshd obj= "NT SERVICE\SSHD"
+#RUN [ "ntrights.exe", "-u \"NT SERVICE\\SSHD\" +r SeAssignPrimaryTokenPrivilege" ]
+
+# Creating and importing SSH keys
+RUN [ "powershell", "-Command", "'c:\\Program Files\\OpenSSH-Win64\\ssh-keygen.exe -A'" ]
+RUN powershell -Command Start-Service -Name ssh-agent
+#ADD psexec_ssh.cmd /windows/temp
+#RUN \windows\temp\psexec.exe -accepteula -s cmd /c c:\Windows\Temp\psexec_ssh.cmd
+
+# Creating firewall exception
+RUN powershell -Command New-NetFirewallRule -Protocol TCP -LocalPort 22 -Direction Inbound -Action Allow -DisplayName SSH
+
+# Configuring services
+RUN powerShell -Command Set-Service -Name sshd -StartupType Automatic
+RUN powerShell -Command Set-Service -Name ssh-agent -StartupType Automatic
+RUN powershell -Command Start-Service -Name sshd
