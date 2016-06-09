@@ -1,4 +1,10 @@
-﻿## Useful commands
+﻿## Install docker tools
+
+```
+choco install -y docker docker-compose docker-machine
+```
+
+## Useful commands
 
 * Remove all containers:
 
