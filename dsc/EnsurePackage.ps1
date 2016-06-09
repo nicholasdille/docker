@@ -16,10 +16,15 @@ Configuration EnsurePackage {
     Import-DscResource -ModuleName cChoco
 
     Node 'localhost' {
+
+        cChocoInstaller chocolatey {
+            InstallDir = "$Env:ProgramFiles\Chocolatey"
+        }
         
         ForEach ($PackageName In $Name) {
             cChocoPackageInstaller "Package_$PackageName" {
                 Name = "$PackageName"
+                DependsOn = '[cChocoInstaller]chocolatey'
             }
         }
 
