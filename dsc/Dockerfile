@@ -3,9 +3,6 @@ MAINTAINER nicholas.dille@mailbox.org
 LABEL Description="PowerShell Desired State Configuration" Vendor="Nicholas Dille" Version="0.1"
 
 RUN powershell -Command \
-    Install-PackageProvider -Name chocolatey -Force
-
-RUN powershell -Command \
     Install-Module -Name xPSDesiredStateConfiguration -Force
 
 RUN powershell -Command \
