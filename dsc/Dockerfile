@@ -18,7 +18,7 @@ RUN powershell -Command \
 
 ADD EnsurePackage.ps1 c:\docker
 RUN powershell -Command \
-    c:\docker\EnsurePackage.ps1 -Name git,Win32-OpenSSH
+    c:\docker\EnsurePackage.ps1 -Name Win32-OpenSSH,docker
 
 COPY SetNodeName.ps1 c:\docker
 ENTRYPOINT c:\docker\SetNodeName.ps1
