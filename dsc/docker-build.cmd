@@ -1,1 +1,1 @@
-﻿docker build --label=nicholasdille/dscpull -t dsc .\dsc
+docker build -t nicholasdille/dsc .
