@@ -2,7 +2,6 @@ FROM windowsservercore
 MAINTAINER nicholas.dille@haufe-lexware.com
 
 # Download materials for Win-OpenSSH
-RUN powershell -Command Invoke-WebRequest -Uri 'https://live.sysinternals.com/psexec.exe' -OutFile 'c:\Windows\Temp\psexec.exe'
 RUN powershell -Command Invoke-WebRequest -Uri 'https://github.com/PowerShell/Win32-OpenSSH/releases/download/5_30_2016/OpenSSH-Win64.zip' -OutFile 'c:\Windows\Temp\OpenSSH-Win64.zip'
 RUN powershell -Command Expand-Archive -Path 'c:\Windows\Temp\OpenSSH-Win64.zip' -DestinationPath "$Env:ProgramFiles"
 
@@ -19,14 +18,14 @@ RUN [ "ntrights.exe", "-u \"NT SERVICE\\SSHD\" +r SeAssignPrimaryTokenPrivilege"
 RUN powershell -Command New-NetFirewallRule -Protocol TCP -LocalPort 22 -Direction Inbound -Action Allow -DisplayName SSH
 
 # Creating and importing SSH keys
-#RUN [ "c:\\Program Files\\OpenSSH-Win64\\ssh-keygen.exe", "-A" ]
-#RUN powershell -Command Start-Service -Name ssh-agent
-#RUN [ "c:\\Program Files\\OpenSSH-Win64\\ssh-add.exe", "c:\\Program Files\\OpenSSH-Win64\\ssh_host_dsa_key" ]
-#RUN [ "c:\\Program Files\\OpenSSH-Win64\\ssh-add.exe", "c:\\Program Files\\OpenSSH-Win64\\ssh_host_rsa_key" ]
-#RUN [ "c:\\Program Files\\OpenSSH-Win64\\ssh-add.exe", "c:\\Program Files\\OpenSSH-Win64\\ssh_host_ecdsa_key" ]
-#RUN [ "c:\\Program Files\\OpenSSH-Win64\\ssh-add.exe", "c:\\Program Files\\OpenSSH-Win64\\ssh_host_ed25519_key" ]
+CMD [ "c:\\Program Files\\OpenSSH-Win64\\ssh-keygen.exe", "-A" ]
+CMD powershell -Command Start-Service -Name ssh-agent
+CMD [ "c:\\Program Files\\OpenSSH-Win64\\ssh-add.exe", "c:\\Program Files\\OpenSSH-Win64\\ssh_host_dsa_key" ]
+CMD [ "c:\\Program Files\\OpenSSH-Win64\\ssh-add.exe", "c:\\Program Files\\OpenSSH-Win64\\ssh_host_rsa_key" ]
+CMD [ "c:\\Program Files\\OpenSSH-Win64\\ssh-add.exe", "c:\\Program Files\\OpenSSH-Win64\\ssh_host_ecdsa_key" ]
+CMD [ "c:\\Program Files\\OpenSSH-Win64\\ssh-add.exe", "c:\\Program Files\\OpenSSH-Win64\\ssh_host_ed25519_key" ]
 
 # Configuring services
-#RUN powerShell -Command Set-Service -Name sshd -StartupType Automatic
-#RUN powerShell -Command Set-Service -Name ssh-agent -StartupType Automatic
-#RUN powershell -Command Start-Service -Name sshd
+CMD powerShell -Command Set-Service -Name sshd -StartupType Automatic
+CMD powerShell -Command Set-Service -Name ssh-agent -StartupType Automatic
+CMD powershell -Command Start-Service -Name sshd
