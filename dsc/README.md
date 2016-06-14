@@ -1,6 +1,6 @@
 ## Creating the Image
 
-.\docker-build.ps1
+.\docker-build.cmd
 
 ## Running the Container
 
