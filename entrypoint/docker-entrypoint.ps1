@@ -9,9 +9,13 @@ If ($Env:NODENAME) {
     'Got no NODENAME' | Out-File -FilePath c:\entry\NODENAME.txt -Force
 }
 
-$Command = $args[0]
-If ($args.Count -gt 1) {
-    $Arguments = $args[1..($args.Count - 1)]
-}
+if ($args.Count -gt 0) {
+    $Command = $args[0]
+    If ($args.Count -gt 1) {
+        $Arguments = $args[1..($args.Count - 1)]
+    }
+    & $Command $Arguments
 
-& $Command $Arguments
+} else {
+    while ($true) { Start-Sleep -Seconds 60 }
+}
