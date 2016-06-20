@@ -8,4 +8,5 @@ RUN del c:\jre-8u91-windows-x64.exe
 
 VOLUME c:\minecraft
 
-#
+ADD minecraft.cmd c:\
+CMD c:\minecraft.cmd

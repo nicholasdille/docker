@@ -1,6 +1,5 @@
-Set JAVA_HOME=%~dp0..\Java
+Set JAVA_HOME=%ProgramFiles%\Java\jre1.8.0u91
 Set PATH=%PATH%;%JAVA_HOME%\Bin
 
-%~d0
-cd "%~dp0"
-Java -Xmx1024M -Xms32M -jar "%~dp0spigot-1.9.2.jar" -W ./worlds
+cd \minecraft
+Java -Xmx1024M -Xms32M -jar "spigot-1.10.jar" -W ./worlds

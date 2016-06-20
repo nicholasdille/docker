@@ -12,5 +12,5 @@ RUN del c:\jre-8u91-windows-x64.exe
 
 RUN md c:\build
 ADD https://hub.spigotmc.org/jenkins/job/BuildTools/lastSuccessfulBuild/artifact/target/BuildTools.jar c:\build\BuildTools.jar
-ADD build.ps1 c:\build
-CMD powershell -command c:\build\build.ps1
+ADD RunBuildTools.ps1 c:\build
+CMD powershell -command c:\build\RunBuildTools.ps1
