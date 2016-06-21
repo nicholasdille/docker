@@ -1,0 +1,1 @@
+docker run -d --name minecraft -v D:\Apps\MinecraftSpigot:c:\minecraft -p 25565:25565 -p 25575:25575 nicholasdille/spigotmc
