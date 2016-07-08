@@ -1,0 +1,1 @@
+set > c:\set.txt
