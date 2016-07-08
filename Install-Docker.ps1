@@ -21,7 +21,7 @@ If (Get-Service -Name 'docker') {
     # Download docker engine
     Invoke-WebRequest 'https://aka.ms/tp5/b/dockerd' -OutFile "$DockerPath\dockerd.exe"
     # Register docker engine service
-    dockerd --register-service
+    & "$env:ProgramFiles\docker\dockerd" --register-service
     # Start docker engine
     Start-Service Docker
     # Add firewall rule
