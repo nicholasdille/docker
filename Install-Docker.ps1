@@ -1,6 +1,11 @@
-﻿$DockerPath = "$Env:ProgramFiles\docker"
+﻿Add-WindowsFeature -Name Containers -Restart
 
-If (Test-Path -Path $DockerPath) {
+Install-PackageProvider -Name ContainerImage -Force
+Install-ContainerImage -Name WindowsServerCore
+
+$DockerPath = "$Env:ProgramFiles\docker"
+
+If (-Not (Test-Path -Path $DockerPath)) {
     New-Item -Type Directory -Path $DockerPath | Out-Null
 }
 
@@ -20,8 +25,10 @@ If (Get-Service -Name 'docker') {
     # Start docker engine
     Start-Service Docker
     # Add firewall rule
-    New-NetFirewallRule -Name 'docker' -DisplayName 'Docker Engine' -Direction Inbound -Protocol TCP -LocalPort 2376 -Action Allow -Enabled True -Profile Any
+    New-NetFirewallRule -Name 'docker' -DisplayName 'Docker Engine' -Direction Inbound -Protocol TCP -LocalPort 2376 -Action Allow -Enabled True -Profile Domain,Private
 }
 
 # Download docker client
 Invoke-WebRequest 'https://aka.ms/tp5/b/docker'  -OutFile "$DockerPath\docker.exe"
+
+docker tag windowsservercore:10.0.14300.1000 windowsservercore:latest
