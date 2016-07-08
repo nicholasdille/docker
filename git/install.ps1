@@ -1,0 +1,1 @@
+﻿Start-Process -FilePath c:\Git-64-bit.exe -PassThru -Wait -ArgumentList "/VERYSILENT /NORESTART /NOCANCEL /SP- /SUPPRESSMSGBOXES /DIR=c:\git"

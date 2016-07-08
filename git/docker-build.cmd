@@ -1,1 +1,0 @@
-﻿docker build --label=nicholasdille/git -t git .\git

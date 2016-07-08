@@ -1,0 +1,5 @@
+FROM windowsservercore
+MAINTAINER nicholas.dille@mailbox.org
+
+ADD Git-64-bit.exe /
+RUN powershell -Command Start-Process -FilePath c:\Git-64-bit.exe -PassThru -Wait -ArgumentList "/VERYSILENT /NORESTART /NOCANCEL /SP- /SUPPRESSMSGBOXES /DIR=c:\git"
