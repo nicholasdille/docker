@@ -1,6 +1,6 @@
 @Echo Off
 
-docker run -d --name build nicholasdille/spigotmc-build
+docker run -d --name build -w c:\build nicholasdille/spigotmc-build powershell -command c:\build\RunBuildTools.ps1
 docker wait build
 docker logs --tail=5 build
 

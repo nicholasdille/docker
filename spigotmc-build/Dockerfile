@@ -9,4 +9,4 @@ RUN md c:\build
 ADD RunBuildTools.ps1 c:\build
 ADD https://hub.spigotmc.org/jenkins/job/BuildTools/lastSuccessfulBuild/artifact/target/BuildTools.jar /build/BuildTools.jar
 
-CMD powershell -command c:\build\RunBuildTools.ps1
+CMD powershell -command c:\\build\\RunBuildTools.ps1
