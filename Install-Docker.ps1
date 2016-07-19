@@ -1,7 +1,7 @@
 ﻿Add-WindowsFeature -Name Containers -Restart
 
-Install-PackageProvider -Name ContainerImage -Force
-Install-ContainerImage -Name WindowsServerCore
+#Install-PackageProvider -Name ContainerImage -Force
+#Install-ContainerImage -Name WindowsServerCore
 
 $DockerPath = "$Env:ProgramFiles\docker"
 
@@ -19,7 +19,7 @@ If (Get-Service -Name 'docker') {
 
 } else {
     # Download docker engine
-    Invoke-WebRequest 'https://aka.ms/tp5/b/dockerd' -OutFile "$DockerPath\dockerd.exe"
+    Invoke-WebRequest https://master.dockerproject.org/windows/amd64/dockerd.exe -OutFile "$DockerPath\dockerd.exe"
     # Register docker engine service
     & "$env:ProgramFiles\docker\dockerd" --register-service
     # Start docker engine
@@ -29,6 +29,16 @@ If (Get-Service -Name 'docker') {
 }
 
 # Download docker client
-Invoke-WebRequest 'https://aka.ms/tp5/b/docker'  -OutFile "$DockerPath\docker.exe"
+Invoke-WebRequest https://master.dockerproject.org/windows/amd64/docker.exe -OutFile "$DockerPath\docker.exe"
 
-docker tag windowsservercore:10.0.14300.1000 windowsservercore:latest
+Start-BitsTransfer https://aka.ms/tp5/6b/docker/nanoserver -Destination "$Env:Temp\nanoserver.tar.gz"
+Start-BitsTransfer https://aka.ms/tp5/6b/docker/windowsservercore -Destination "$Env:Temp\windowsservercore.tar.gz"
+
+docker load -i "$Env:Temp\nanoserver.tar.gz"
+docker load -i "$Env:Temp\windowsservercore.tar.gz"
+
+docker tag microsoft/nanoserver:10.0.14300.1030 microsoft/nanoserver:latest
+docker tag microsoft/windowsservercore:10.0.14300.1030 microsoft/windowsservercore:latest
+
+Set-ItemProperty -Path 'HKLM:SOFTWARE\Microsoft\Windows NT\CurrentVersion\Virtualization\Containers' -Name VSmbDisableOplocks -Type DWord -Value 1 -Force
+Restart-Computer
