@@ -1,8 +1,0 @@
-FROM windowsservercore
-MAINTAINER nicholas.dille@mailbox.org
-
-ADD Git-64-bit.exe /
-ADD install.ps1 /
-RUN [ "powershell", "-command", "c:\\install.ps1" ]
-
-CMD [ "c:\\git\\cmd\\git.exe", "--version" ]
