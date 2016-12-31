@@ -1,5 +1,5 @@
 ﻿$DownloadPageUri = 'http://www.oracle.com/technetwork/java/javase/downloads/jre8-downloads-2133155.html'
-$JavaVersion = '8u91'
+$JavaVersion = '8u111'
 
 $Response = Invoke-WebRequest -Uri $DownloadPageUri
 $JreUri = @($Response.RawContent -split "`n" | ForEach-Object {If ($_ -imatch '"filepath":"(http://[^"]+)"') {$Matches[1]}} | Where-Object {$_ -like "*-$JavaVersion-windows-x64.tar.gz"})

@@ -1,0 +1,12 @@
+# escape=`
+
+FROM microsoft/windowsservercore:10.0.14393.576
+MAINTAINER nicholas.dille@mailbox.org
+
+SHELL [ "powershell", "-Command" ]
+
+ENV JAVA_HOME='c:\jre'
+ADD jre-windows-x64.tar.gz /
+RUN Get-ChildItem -Path c:\ -Filter 'jre*' -Directory | Rename-Item -NewName jre
+
+CMD [ "c:\\jre\\bin\\java.exe", "-version" ]
