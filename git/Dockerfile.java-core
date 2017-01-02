@@ -5,4 +5,6 @@ ADD Git-64-bit.exe /
 ADD install.ps1 /
 RUN [ "powershell", "-command", "c:\\install.ps1" ]
 
+ADD entry.ps1 /
+ENTRYPOINT c:\entry.ps1
 CMD [ "c:\\git\\cmd\\git.exe", "--version" ]

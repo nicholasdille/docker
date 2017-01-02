@@ -1,4 +1,4 @@
 ﻿docker-build.ps1
 *.md
 *.tag
-Git-*.exe
+Git-*-64-bit.exe
