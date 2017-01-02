@@ -1,5 +1,10 @@
+"Preparing environment..."
 $Env:JAVA_HOME = "c:\jre"
-$Env:Path = "$Env:Path;$Env:ProgramFiles\Git\bin;$JAVA_HOME\bin"
+$Env:PATH += ";$Env:JAVA_HOME\bin;c:\git\bin"
+Set-Location -Path "$PSScriptRoot"
 
-Set-Location -Path c:\build
-java.exe -jar BuildTools.jar
+#Start-Process -FilePath bash.exe -ArgumentList @('--login', '-c', '-i', 'java.exe -jar BuildTools.jar')
+#Get-Content -Path "$PSScriptRoot\BuildTools.log.txt" -Wait
+
+"Calling SpigotMC BuildTools..."
+java -jar .\BuildTools.jar
