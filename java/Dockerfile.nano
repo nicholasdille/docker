@@ -9,4 +9,6 @@ ENV JAVA_HOME='c:\jre'
 ADD jre-windows-x64.tar.gz /
 RUN Get-ChildItem -Path c:\ -Filter 'jre*' -Directory | Rename-Item -NewName jre
 
+ADD entry.ps1 /
+ENTRYPOINT c:\entry.ps1
 CMD [ "c:\\jre\\bin\\java.exe", "-version" ]
