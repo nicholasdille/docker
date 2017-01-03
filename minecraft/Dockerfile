@@ -12,7 +12,6 @@ RUN mkdir c:\minecraft,c:\minecraft\config,c:\minecraft\plugins,c:\minecraft\wor
 ADD entry.ps1 /
 ENTRYPOINT c:\entry.ps1
 
-EXPOSE 25565
-EXPOSE 25575
+EXPOSE 25565 25575
 
 #VOLUME c:\minecraft
