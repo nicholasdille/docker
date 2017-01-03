@@ -1,5 +1,5 @@
 FROM windowsservercore
-MAINTAINER nicholas.dille@haufe-lexware.com
+MAINTAINER nicholas.dille@mailbox.org
 
 # Download materials for Win-OpenSSH
 RUN powershell -Command Invoke-WebRequest -Uri 'https://github.com/PowerShell/Win32-OpenSSH/releases/download/5_30_2016/OpenSSH-Win64.zip' -OutFile 'c:\Windows\Temp\OpenSSH-Win64.zip'
