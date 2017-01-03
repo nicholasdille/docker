@@ -1,1 +1,1 @@
-docker build -t spigotmc2 .
+docker build -t nicholasdille/minecraft .
