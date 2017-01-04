@@ -14,4 +14,4 @@ ENTRYPOINT c:\entry.ps1
 
 EXPOSE 25565 25575
 
-#VOLUME c:\minecraft
+VOLUME c:\minecraft\config c:\minecraft\plugins c:\minecraft\worlds
