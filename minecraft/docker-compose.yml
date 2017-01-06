@@ -1,0 +1,15 @@
+version: '2'
+volumes:
+  minecraft_config:
+  minecraft_plugins:
+  minecraft_worlds:
+services:
+  server:
+    build:
+      context: .
+      dockerfile: Dockerfile.example
+    image: minecraft
+  volumes:
+  - minecraft_config:c:\minecraft\config
+  - minecraft_plugins:c:\minecraft\plugins
+  - minecraft_worlds:c:\minecraft\worlds
