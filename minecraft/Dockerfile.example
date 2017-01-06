@@ -1,0 +1,7 @@
+# escape=`
+
+FROM nicholasdille/minecraft
+
+SHELL [ "powershell", "-Command" ]
+
+ADD spigot-1.11.2.jar /
