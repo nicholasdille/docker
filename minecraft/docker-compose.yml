@@ -9,7 +9,7 @@ services:
       context: .
       dockerfile: Dockerfile.example
     image: minecraft
-  volumes:
-  - minecraft_config:c:\minecraft\config
-  - minecraft_plugins:c:\minecraft\plugins
-  - minecraft_worlds:c:\minecraft\worlds
+    volumes:
+    - minecraft_config:c:\minecraft\config
+    - minecraft_plugins:c:\minecraft\plugins
+    - minecraft_worlds:c:\minecraft\worlds
