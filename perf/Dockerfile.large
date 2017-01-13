@@ -1,0 +1,7 @@
+# escape=`
+FROM microsoft/windowsservercore
+SHELL [ "powershell", "-command" ]
+
+RUN 'Downloading...'; Invoke-WebRequest -UseBasicParsing -Uri 'https://github.com/git-for-windows/git/releases/download/v2.11.0.windows.1/Git-2.11.0-64-bit.exe' -OutFile 'c:\Git-2.11.0-64-bit.exe'
+RUN 'Installing...'; Start-Process -FilePath 'c:\Git-2.11.0-64-bit.exe' -PassThru -Wait -ArgumentList '/VERYSILENT /NORESTART /NOCANCEL /SP- /SUPPRESSMSGBOXES /DIR=c:\git'
+RUN 'Removing...'; Remove-Item -Path 'c:\Git-2.11.0-64-bit.exe' -Force
