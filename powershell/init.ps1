@@ -1,0 +1,2 @@
+'Initialization'
+$ErrorActionPreference = 'Stop'
