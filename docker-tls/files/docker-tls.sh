@@ -1,11 +1,5 @@
 #!/bin/bash
 
-CA_NAME=localhost
-CA_DN=/CN=${CA_NAME}
-SERVER_NAME=localhost
-SERVER_DN=/CN=${SERVER_NAME}
-SERVER_IP=127.0.0.1
-
 chmod 0770 /etc/docker
 cd /etc/docker
 
