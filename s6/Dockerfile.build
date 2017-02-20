@@ -1,0 +1,55 @@
+FROM ubuntu:xenial
+
+SHELL [ "bash", "-e", "-x", "-c" ]
+
+RUN apt-get update \
+ && apt-get -y install gcc make wget
+
+WORKDIR /tmp
+
+ENV SKALIBS_VERSION=2.4.0.2 \
+    SKALIBS_SHA256=0708172bc2ec9825f8a4f312d35f8dcd94da5f291425a598c33c873b3de77df8
+RUN wget http://skarnet.org/software/skalibs/skalibs-${SKALIBS_VERSION}.tar.gz \
+ && echo "${SKALIBS_SHA256} *skalibs-${SKALIBS_VERSION}.tar.gz" | sha256sum -c - \
+ && tar -xvzf skalibs-${SKALIBS_VERSION}.tar.gz \
+ && cd skalibs-* \
+ && ./configure \
+ && make \
+ && make install \
+ && make install DESTDIR=/tmp/pkg
+
+ENV EXECLINE_VERSION=2.2.0.0 \
+    EXECLINE_SHA256=93bd744f2e3ad204cb89f147efdc6ca4e622f9c6bfc9895e0b2cb8b0480029de
+RUN wget http://skarnet.org/software/execline/execline-${EXECLINE_VERSION}.tar.gz \
+ && echo "${EXECLINE_SHA256} *execline-${EXECLINE_VERSION}.tar.gz" | sha256sum -c - \
+ && tar -xvzf execline-${EXECLINE_VERSION}.tar.gz \
+ && cd execline-* \
+ && ./configure \
+ && make \
+ && make install \
+ && make install DESTDIR=/tmp/pkg
+
+ENV S6_VERSION=2.4.0.0 \
+    S6_SHA256=5e788d5935dbcce76ac9a99cfcf6ee46a2ffb84220c84225df7589e9a3585560
+RUN wget http://www.skarnet.org/software/s6/s6-${S6_VERSION}.tar.gz \
+ && echo "${S6_SHA256} *s6-${S6_VERSION}.tar.gz" | sha256sum -c - \
+ && tar -xvzf s6-${S6_VERSION}.tar.gz \
+ && cd s6-* \
+ && ./configure \
+ && make \
+ && make install \
+ && make install DESTDIR=/tmp/pkg
+
+ENV S6_RC_VERSION=0.1.0.0 \
+    S6_RC_SHA256=d04a8a765740ed55e38a33da3639197f51f83b3e498bdef5bc1d1d322b1acff3
+RUN wget http://skarnet.org/software/s6-rc/s6-rc-${S6_RC_VERSION}.tar.gz \
+ && echo "${S6_RC_SHA256} *s6-rc-${S6_RC_VERSION}.tar.gz" | sha256sum -c - \
+ && tar -xvzf s6-rc-${S6_RC_VERSION}.tar.gz \
+ && cd s6-rc-* \
+ && ./configure \
+ && make \
+ && make install \
+ && make install DESTDIR=/tmp/pkg
+
+RUN cd pkg \
+ && tar -cvzf /tmp/s6-bin.tar.gz .
