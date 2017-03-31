@@ -1,6 +1,6 @@
 # Introduction
 
-XXX
+Container image with ruby serving as a base for jekyll
 
 # TODO
 
