@@ -1,0 +1,2 @@
+FROM nicholasdille/supervisord
+

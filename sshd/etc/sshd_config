@@ -1,0 +1,26 @@
+Port 22
+Protocol 2
+
+UsePrivilegeSeparation yes
+StrictModes yes
+HostBasedAuthentication no
+IgnoreUserKnownHosts yes
+PermitEmptyPasswords no
+ChallengeResponseAuthentication no
+UseLogin no
+UseDNS no
+PrintMotd no
+PrintLastlog yes
+MaxStartups 10
+MaxSessions 5
+Subsystem sftp internal-sftp
+
+TCPKeepAlive no
+ClientAliveInterval 86400
+ClientAliveCountMax 2
+
+LoginGraceTime 30
+PermitRootLogin no
+PubkeyAuthentication yes
+AuthorizedKeysFile %h/.ssh/authorized_keys
+PasswordAuthentication no
