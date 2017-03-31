@@ -1,6 +1,6 @@
 # Introduction
 
-Base container for building and testing [Jekyll]() based sites
+Base container for building and testing [Jekyll](https://jekyllrb.com/) based sites
 
 # Usage
 
