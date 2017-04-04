@@ -1,5 +1,5 @@
 $ErrorActionPreference = 'Stop'
-#Set-PSDebug -Trace 1
+Set-PSDebug -Trace 1
 
 #region Import registry definition
 Import-LocalizedData -BaseDirectory "$PSScriptRoot" -FileName registry.psd1 -BindingVariable Registry
