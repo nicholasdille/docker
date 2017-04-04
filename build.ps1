@@ -1,8 +1,10 @@
-#$ErrorActionPreference = 'Stop'
+$ErrorActionPreference = 'Stop'
 #Set-PSDebug -Trace 1
 
 #region Import registry definition
 Import-LocalizedData -BaseDirectory "$PSScriptRoot" -FileName registry.psd1 -BindingVariable Registry
+'Imported registry definition'
+$Registry
 #endregion
 
 #region Enumerate directories with image definition
@@ -11,6 +13,8 @@ Get-ChildItem -Path "$PSScriptRoot" -File -Recurse -Filter 'image.psd1' | ForEac
 
     #region Import image definition
     Import-LocalizedData -BaseDirectory $_.Directory -FileName image.psd1 -BindingVariable Image
+    'Imported image definition'
+    $Image
     #endregion
 
     #region Build image
