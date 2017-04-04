@@ -18,7 +18,9 @@ Get-ChildItem -Path "$PSScriptRoot" -File -Recurse -Filter 'image.psd1' | ForEac
     #endregion
 
     #region Build image
-    & docker build -t $($Image.Name):$($Image.Version) $($_.DirectoryName)
+    $param = @("build", "-t", "$($Image.Name):$($Image.Version)", "$($_.DirectoryName)")
+    "docker $($param -join ' ')"
+    & docker @param
     #endregion
 
     #region Build public image name
