@@ -32,13 +32,17 @@ Get-ChildItem -Path "$PSScriptRoot" -File -Recurse -Filter 'image.psd1' | ForEac
 
     #region Tag image with public name(s)
     foreach ($Tag in $Image.Tags) {
-        "docker tag $($Image.Name):$($Image.Version) $Repository/$($Image.Name):$Tag"
+        $param = @("tag", "$($Image.Name):$($Image.Version)", "$Repository/$($Image.Name):$Tag")
+        "docker $($param -join ' ')"
+        & docker @param
     }
     #endregion
 
     #region Push image with public name(s)
     foreach ($Tag in $Image.Tags) {
-        "docker push $Repository/$($Image.Name):$Tag"
+        $param = @("push", "$Repository/$($Image.Name):$Tag")
+        "docker $($param -join ' ')"
+        & docker @param
     }
     #endregion
 }
