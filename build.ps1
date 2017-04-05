@@ -23,6 +23,7 @@ if ($Files.Length -eq 0) {
 $Images = @{}
 foreach ($File in $Files) {
     $Images[$File.Directory.BaseName] = Import-LocalizedData -BaseDirectory $File.Directory -FileName image.psd1
+    $Images[$File.Directory.BaseName].DirectoryName = $File.DirectoryName
 }
 
 #region Login to Docker Hub
@@ -40,7 +41,7 @@ while ($Images.Count -gt 0) {
         $Image = $Images[$ImageName]
 
         #region Build image
-        $param = @("build", "-t", "$($Image.Name):$($Image.Version)", "$($_.DirectoryName)")
+        $param = @("build", "-t", "$($Image.Name):$($Image.Version)", "$($Image.DirectoryName)")
         "docker $($param -join ' ')"
         & docker @param
         #endregion
