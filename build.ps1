@@ -14,22 +14,27 @@ Import-LocalizedData -BaseDirectory "$PSScriptRoot" -FileName registry.psd1 -Bin
 $Registry
 #endregion
 
-#TODO: Only build changed images
-$Files = Get-ChildItem -Path "$PSScriptRoot" -File -Recurse -Filter 'image.psd1'
+#region Determine which images to build
+#$Files = Get-ChildItem -Path "$PSScriptRoot" -File -Recurse -Filter 'image.psd1'
+$Files = & git diff --name-only HEAD~1 | ForEach-Object { Get-Item -Path $_ }
 if ($Files.Length -eq 0) {
     return
 }
+#endregion
 
+#region Load image definitions
 $Images = @{}
 foreach ($File in $Files) {
     $Images[$File.Directory.BaseName] = Import-LocalizedData -BaseDirectory $File.Directory -FileName image.psd1
     $Images[$File.Directory.BaseName].DirectoryName = $File.DirectoryName
 }
+#endregion
 
 #region Login to Docker Hub
 docker login -u $env:DOCKER_USER -p $env:DOCKER_PASS
 #endregion
 
+#region Enumerate images
 while ($Images.Count -gt 0) {
     $ImageName = $Images.Keys | Get-Random
     $DependsOn = $Images[$ImageName].DependsOn
@@ -73,8 +78,7 @@ while ($Images.Count -gt 0) {
         $Images.Remove($ImageName)
     }
 }
-
-return
+#endregion
 
 #region Logout of Docker Hub
 docker logout
