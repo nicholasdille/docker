@@ -4,4 +4,5 @@
     Tags = @(
         'latest'
     )
+    DependsOn = 'ruby'
 }
